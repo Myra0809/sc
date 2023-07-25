@@ -175,7 +175,7 @@
     let video_time = Array(10);
     $.ajax({
         type:'post',
-        url:'http://121.36.78.210:9999/video_info',
+        url:'https://cors-anywhere.herokuapp.com/http://121.36.78.210:9999/video_info',
         dataType : "json",
         async: true,
         success : function(result) {
@@ -287,7 +287,7 @@
     let randomNumbers = [];
     $.ajax({
         type:'post',
-        url:'http://121.36.78.210:9999/img_info',
+        url:'https://cors-anywhere.herokuapp.com/http://121.36.78.210:9999/img_info',
         dataType : "json",
         async: true,
         success : function(result) {
