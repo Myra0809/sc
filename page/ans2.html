@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试结果</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <style>
+        .layui-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .font2 > p {
+            font-size: 15px;
+            /*text-shadow: 1px 1px 1px black;*/
+            color: #800000;
+            text-align: left;
+        }
+        .text-overlay {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 20px;
+            color: red;
+        }
+
+    </style>
+    <script src="../layui/layui.js" charset="utf-8"></script>
+</head>
+<body style="background:url('../img/background_new2.png')">
+<div class="layui-row">
+    <div class="layui-col-xs11 layui-col-md11" style="text-align: center; margin-top: 10px;">
+        <div class="grid-demo grid-demo-bg2">
+            <img style="width: 100px;" src="../img/logo.png">
+        </div>
+    </div>
+</div>
+<div class="layui-row">
+    <div class="layui-col-xs11 layui-col-md11" style="text-align: center; margin-top: 10px;">
+        <img id="img" style="width: 90%; display: none" src="../img/ans.png" alt="Image">
+        <div id="img1" style="width: 90%; display: flex;justify-content: center;align-items: center;"></div>
+        <div id="img2" style="width: 90%; height:20px;display: flex;justify-content: center;align-items: center;"> </div>
+
+    </div>
+</div>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/html2canvas.js"></script>
+<script type="text/javascript" src="../js/Canvas2Image.js"></script>
+<script>
+    /* 修改字体大小适配 */
+    // 获取设备的屏幕宽度
+    var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    // 根据设计稿和适配规则计算基准字体大小
+    var baseFontSize = screenWidth / 750 * 16; // 假设设计稿宽度为750px，基准字体大小为16px
+    // 设置根元素的字体大小
+    document.documentElement.style.fontSize = baseFontSize + 'px';
+
+
+    let canvas = document.createElement('canvas');
+    let ctx = canvas.getContext('2d');
+    let image = document.getElementById('img');
+    image.onerror = function() {
+        console.log("图像加载出错");
+    };
+    // console.log("ok")
+    image.onload = function() {
+        setTimeout(function() {
+            let divElement = document.getElementById('img1');
+
+            canvas.width = Math.min(screenWidth - 30, 400);
+            let scale = canvas.width / image.width; // 计算缩放比例
+            canvas.height = image.height * scale;
+            canvas.id = 'canvas';
+
+            ctx.fillStyle = '#B8860B'; // 设置填充颜色为黄色
+            ctx.fillRect(0, 0, canvas.width, canvas.height); // 填充整个 canvas
+
+            ctx.drawImage(image, (canvas.width - image.width * scale) / 2, 0, image.width * scale, image.height * scale);
+            // console.log(canvas.width - image.width * scale)
+            let wid, hei;
+            let fontSize;   // = Math.min(canvas.width, canvas.height) * 0.05; // 根据图像大小计算字体大小
+            // // ctx.font = fontSize + 'px "Arial"'; // 设置字体
+            // ctx.font = 'bold ' + fontSize + 'px "黑体"';
+            // ctx.fillStyle = '#d7e1ff';
+            // wid = canvas.width * 0.26
+            // hei = canvas.height * 0.27
+            // ctx.fillText('直觉型·环境感知达人', wid, hei);
+            fontSize = Math.min(canvas.width, canvas.height) * 0.05; // 根据图像大小计算字体大小
+            ctx.font = fontSize + 'px "楷体"';
+            ctx.fillStyle = 'white';
+            wid = canvas.width * 0.11
+            hei = canvas.height * 0.18
+            let name = localStorage.getItem("name")
+            ctx.fillText(name, wid, hei);  // 最多12个字符
+            wid = canvas.width * 0.10
+            hei = canvas.height * 0.38
+
+            // 柱形图
+            // 准备绘制的数据
+            var data = [parseFloat(localStorage.getItem("dir")), parseFloat(localStorage.getItem("dis")), parseFloat(localStorage.getItem("imagination")),
+                parseFloat(localStorage.getItem("memory")), parseFloat(localStorage.getItem("reason"))];
+            var labels = ["定向能力", "距离感知", "空间想象", "空间记忆", "空间推理"];
+            var barWidth = canvas.width * 0.09;
+            var barSpacing = canvas.width * 0.06;
+            var startX = canvas.width * 0.11
+            var startY = canvas.height * 0.54
+            var maxHeight = canvas.height * 0.18;
+
+            // 绘制坐标轴线
+            ctx.strokeStyle = "white"
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(startX, startY - maxHeight);
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(startX + barSpacing + data.length * (barWidth + barSpacing), startY);
+            ctx.stroke();
+            // 绘制箭头样式
+            ctx.beginPath();
+            ctx.moveTo(startX, startY - maxHeight);
+            ctx.lineTo(startX - 5, startY - maxHeight + 10);
+            ctx.lineTo(startX + 5, startY - maxHeight + 10);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.moveTo(startX + barSpacing + data.length * (barWidth + barSpacing), startY);
+            ctx.lineTo(startX + barSpacing + data.length * (barWidth + barSpacing) - 10, startY - 5);
+            ctx.lineTo(startX + barSpacing + data.length * (barWidth + barSpacing) - 10, startY + 5);
+            ctx.fill();
+
+            // 绘制 x 轴标签
+            for (var i = 0; i < labels.length; i++) {
+                var x = startX + (barWidth + barSpacing) * i + barWidth / 2;
+                var y = startY + 15;
+                ctx.fillStyle = "white";
+                fontSize = Math.min(canvas.width, canvas.height) * 0.033; // 根据图像大小计算字体大小
+                ctx.font = fontSize + 'px "黑体"';
+                ctx.fillText(labels[i], x, y);
+            }
+            // 绘制柱形图
+            let maxScore = 0.0;
+            for (var i = 0; i < data.length; i++) maxScore = Math.max(maxScore, data[i])
+            // console.log(maxScore)
+            let vis = 0;
+            let careers = [
+                ['自然摄影师', '地理分析师', '心理咨询师'],
+                ['设计师', '城市规划师', '影视导演'],
+                ['导游', '律师', '教师'],
+                ['建筑师', '冒险家', '考古学家']
+            ];
+            let c_mess = [
+                ["捕捉自然", "之美。"], ["探索地球，", "洞察全貌。"], ["情绪抚慰，", "心灵解放。"],
+                ['创意转化，', "美感无限。"], ["城市设计，", "未来构想。"], ["电影创意", "塑梦。"],
+                ['发现旅行', "之美。"], ["司法护盾，", "公正维权。"], ["启迪智慧，", "培育未来。"],
+                ['构思未来，', "创造永恒。"], ["勇往直前，", "探索未知。"], ["历史探索，", "寻宝古迹。"],
+            ];
+            console.log("vis = " + vis)
+            for (var i = 0; i < data.length; i++) {
+                var height = data[i] * canvas.height / 632.0;
+                var x = barSpacing + startX + (barWidth + barSpacing) * i;
+                var y = startY - height;
+                if (data[i] === maxScore) {
+                    // console.log("**" + " " + i)
+                    ctx.fillStyle = "red";
+                    ctx.fillRect(x, y, barWidth, height);
+                    let ans = "", pos = i + 1;
+                    if (pos === 1 || pos === 2) {
+                        ans = "直觉型·环境感知达人";
+                        vis = 0;  //自然摄影师  地理分析师  心理咨询师
+                    } else if (pos === 3) {
+                        ans = "想象型·空间艺术家" // 设计师  城市规划师  影视导演
+                        vis = 1;
+                    } else if (pos === 4) {
+                        ans = "最强大脑·环境记忆大师"  // 导游 律师 教师
+                        vis = 2;
+                    } else if (pos === 5) {
+                        ans = "感知型·空间探索家" // 建筑师 冒险家 考古学家
+                        vis = 3
+                    }
+                    fontSize = Math.min(canvas.width, canvas.height) * 0.05; // 根据图像大小计算字体大小
+                    // ctx.font = fontSize + 'px "Arial"'; // 设置字体
+                    ctx.font = 'bold ' + fontSize + 'px "黑体"';
+                    ctx.fillStyle = '#d7e1ff';
+                    wid = canvas.width * 0.26
+                    hei = canvas.height * 0.27
+                    ctx.fillText(ans, wid, hei);
+                } else {
+                    ctx.fillStyle = "#4682B4"
+                    ctx.fillRect(x, y, barWidth, height);
+                }
+
+                // 绘制柱形上方的文字
+                ctx.fillStyle = "white";
+                fontSize = Math.min(canvas.width, canvas.height) * 0.035; // 根据图像大小计算字体大小
+                ctx.font = fontSize + 'px "Arial"';
+                let xx = parseFloat(data[i]).toFixed(1)
+                ctx.fillText(xx, x + 6, y - 5);
+            }
+
+            // 职业  三个字-0.01 两个字+0.01
+            let c1 = careers[vis][0], c2 = careers[vis][1], c3 = careers[vis][2];
+            fontSize = Math.min(canvas.width, canvas.height) * 0.05; // 根据图像大小计算字体大小
+            ctx.font = 'bold ' + fontSize + 'px "楷体"';
+            ctx.fillStyle = '#d7e1ff';
+            let ll = c1.length - 3;
+            wid = canvas.width * (0.14 - ll * 0.018)
+            hei = canvas.height * 0.69
+            ctx.fillText(c1, wid, hei);
+            ctx.font = 'bold ' + fontSize + 'px "楷体"';
+            ctx.fillStyle = '#d7e1ff';
+            ll = c2.length - 3;
+            wid = canvas.width * (0.43 - ll * 0.018)
+            hei = canvas.height * 0.69
+            ctx.fillText(c2, wid, hei);
+            ctx.font = 'bold ' + fontSize + 'px "楷体"';
+            ctx.fillStyle = '#d7e1ff';
+            ll = c2.length - 2;
+            wid = canvas.width * (0.75 - ll * 0.018)
+            hei = canvas.height * 0.69
+            ctx.fillText(c3, wid, hei);
+            let pos = vis * 3
+            fontSize = Math.min(canvas.width, canvas.height) * 0.04; // 根据图像大小计算字体大小
+            ctx.font = fontSize + 'px "楷体"';
+            ctx.fillStyle = '#d7e1ff';
+            wid = canvas.width * 0.13
+            hei = canvas.height * 0.74
+            ctx.fillText(c_mess[pos][0], wid, hei);
+            wid = canvas.width * 0.13
+            hei = canvas.height * 0.77
+            ctx.fillText(c_mess[pos][1], wid, hei);
+
+            wid = canvas.width * 0.42
+            hei = canvas.height * 0.74
+            ctx.fillText(c_mess[pos + 1][0], wid, hei);
+            wid = canvas.width * 0.42
+            hei = canvas.height * 0.77
+            ctx.fillText(c_mess[pos + 1][1], wid, hei);
+
+            wid = canvas.width * 0.70
+            hei = canvas.height * 0.74
+            // console.log(c_mess[vis] + " " + c_mess[vis][2])
+            ctx.fillText(c_mess[pos + 2][0], wid, hei);
+            wid = canvas.width * 0.70
+            hei = canvas.height * 0.77
+            ctx.fillText(c_mess[pos + 2][1], wid, hei);
+
+
+            canvas.toBlob(function (blob) {
+                let newImage = new Image();
+                newImage.src = URL.createObjectURL(blob);
+
+                newImage.onload = function () {
+                    let imgWidth = newImage.width;
+                    let imgHeight = newImage.height;
+
+                    divElement.style.display = 'inline-block';
+                    divElement.style.backgroundImage = 'url("' + newImage.src + '")';
+                    divElement.style.backgroundSize = 'contain';
+                    divElement.style.backgroundPosition = 'center';
+                    divElement.style.backgroundRepeat = 'no-repeat';
+                    divElement.style.width = imgWidth + 'px';
+                    divElement.style.height = imgHeight + 'px';
+                };
+
+            }, 'image/jpeg', 1);
+        }, 2000);
+    }
+
+
+
+
+
+
+    // 禁止回退
+    window.onload = function() {
+        if(window.history && window.history.pushState) {
+            window.onpopstate=function () {
+                window.history.pushState('forward', null, '');
+                window.history.forward(1);
+            };
+        }
+        window.history.pushState('forward', null, '');//在IE中必须得有这两行
+        window.history.forward(1);
+    }
+    if(window.history && window.history.pushState) {
+        window.onpopstate=function () {
+            window.history.pushState('forward', null, '');
+            window.history.forward(1);
+        };
+    }
+    window.history.pushState('forward', null, '');//在IE中必须得有这两行
+    window.history.forward(1);
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>主题标注</title>
+    <link href="../layui/css/layui.css" rel="stylesheet">
+    <script src="../js/jquery.min.js"></script>
+    <style>
+        body{padding: 6px 16px;}
+        .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
+        .layui-table-cell {
+            height: auto;
+            line-height: 70px;
+        }
+    </style>
+</head>
+<body>
+
+<div style="margin:20px">
+    <h1><strong>主题标注</strong></h1>
+    <button class="layui-btn layui-btn-sm" onclick="add()" style="margin: 15px auto">新增主题类型</button>
+    <button class="layui-btn layui-btn-sm" onclick="show()" style="margin: 15px auto">已有主题类型</button>
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+</div>
+
+
+
+
+<!--编辑类别-->
+<div class="editDiv" style="display:none;">
+<!--    <form id="form1" class="layui-form layui-form-pane" action="" style="text-align:center">-->
+<!--            <input type="checkbox" name="tag" value="0" title="写作">-->
+<!--            <input type="checkbox" name="tag" value="1" title="阅读" checked="">-->
+<!--            <input type='checkbox' name='tag' value='2' title='游戏'>-->
+<!--    </form>-->
+<!--    <form id="form1" class="layui-form" action="" style="margin: 15px 15px">-->
+<!--        <div class="layui-form-item">-->
+<!--            <div class="layui-inline">-->
+<!--&lt;!&ndash;                <label class="layui-form-label"></label>&ndash;&gt;-->
+<!--                <div class="layui-input-inline">-->
+<!--                    <input type="text" name="number" placeholder="对象1" autocomplete="off" class="layui-input">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="layui-inline">-->
+<!--&lt;!&ndash;                <label class="layui-form-label"></label>&ndash;&gt;-->
+<!--                <div class="layui-input-inline">-->
+<!--                    <select name="quiz">-->
+<!--                        <option value="">请选择主题</option>-->
+<!--                        <option value="你工作的第一个城市">你工作的第一个城市</option>-->
+<!--                        <option value="你的工号">你的工号</option>-->
+<!--                        <option value="你最喜欢的老师">你最喜欢的老师</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="layui-inline">-->
+<!--&lt;!&ndash;                <label class="layui-form-label"></label>&ndash;&gt;-->
+<!--                <div class="layui-input-inline">-->
+<!--                    <input type="text" name="number" placeholder="对象2" autocomplete="off" class="layui-input">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="layui-inline">-->
+<!--&lt;!&ndash;                <label class="layui-form-label">分组选择框</label>&ndash;&gt;-->
+<!--                <div class="layui-input-inline">-->
+<!--                    <select name="quiz">-->
+<!--                        <option value="">请选择主题</option>-->
+<!--                        <option value="你工作的第一个城市">你工作的第一个城市</option>-->
+<!--                        <option value="你的工号">你的工号</option>-->
+<!--                        <option value="你最喜欢的老师">你最喜欢的老师</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="layui-inline">-->
+<!--&lt;!&ndash;                <label class="layui-form-label"></label>&ndash;&gt;-->
+<!--                <div class="layui-input-inline">-->
+<!--                    <input type="text" name="number" placeholder="对象3" autocomplete="off" class="layui-input">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </form>-->
+</div>
+
+<!--主题分类添加块-->
+<div class="addDiv" style="display:none;">
+    <form id="form2" class="layui-form layui-form-pane" action="" style="margin: 5px auto; width: 90%; height: 90%">
+        <div class="layui-form-item">
+            <label class="layui-form-label">主题</label>
+            <div class="layui-input-block">
+                <input type="text" name="class_theme" lay-verify="title" autocomplete="off" placeholder="请输入主题类别名称" class="layui-input">
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--主题分类查询块-->
+<div class="showDiv" style="display:none;"></div>
+
+<script type="text/html" id="tableLastTd">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">添加分类</a>
+    <!--    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
+</script>
+
+<!--<script src="https://cdn.bootcss.com/jquery.form/4.2.1/jquery.form.js"></script>-->
+<script src="../layui/layui.js"></script>
+<script>
+    function add() {
+        layer.open({
+            title: '添加主题分类',
+            type: 1,
+            move: false,
+            content: $('.addDiv'),
+            btn: ['提交', '取消'],
+            area: ['90%', '85%'],
+            resize: false,
+            scrollbar: false,
+            yes: function(index, layero){
+                var xx = $('input[name="class_theme"]').val()
+                // alert("xx = " + xx)
+                $.ajax({
+                    type:'post',
+                    url:'/insertTheme',
+                    data:{
+                        name: xx
+                    },
+                    dataType:'text',
+                    async:true,
+                    success : function(result) {
+                        layer.msg("添加成功")
+                    },error : function() {
+                        layer.msg("添加失败，请重新尝试");
+                    }
+                });
+                layer.close(index);
+            },
+        });
+    }
+    function show() {
+        $.ajax({
+            type:'post',
+            url:'/showAllTheme',
+            dataType: "json",
+            async:true,
+            success : function(result) {
+                $('.showDiv').html("");
+                var Htm = "";
+                Htm += "<ul class='layui-menu' id='docDemoMenu1'>";
+                for(var i = 0; i < result.length; i++) {
+                    var name = result[i].name;
+                    // console.log(name);
+                    Htm += "<li><div class='layui-menu-body-title'>" + name + "</div></li>";
+                }
+                Htm += "</ul>"
+                layer.open({
+                    title: '已有主题分类',
+                    type: 1,
+                    move: false,
+                    content: $('.showDiv').append(Htm),
+                    // btn: ['提交', '取消'],
+                    area: ['90%', '85%'],
+                    resize: false,
+                    scrollbar: false,
+                });
+            },error : function() {
+                layer.msg("查询失败");
+            }
+        });
+    }
+    layui.use(['table', 'util', 'form'], function () {
+        var table = layui.table;
+        var util = layui.util;
+        var form = layui.form;
+        form.on('select(id1)', function (data) {
+            // console.log(data);
+            document.getElementById('obj1').value = document.getElementById('id1').value;
+            form.render();
+        });
+        form.on('select(id2)', function (data) {
+            // console.log(data);
+            document.getElementById('obj2').value = document.getElementById('id2').value;
+            form.render();
+        });
+        form.on('select(id3)', function (data) {
+            // console.log(data);
+            document.getElementById('obj3').value = document.getElementById('id3').value;
+            form.render();
+        });
+        form.render();
+
+        //展示已知数据
+        table.render({
+            elem: '#test',
+            url: '/getinfoTheme',
+            cols: [
+                [ //标题栏
+                    {field: 'id', title: 'ID', width: 60, sort: true}
+                    , {field: 'content', title: '文本内容', minWidth: 200}
+                    , {field: 'set', title: '操作', templet: "#tableLastTd", minWidth: 100}
+                    , {field: 'theme', title: '主题分类', width: 200}
+                    , {field: 'time', title: '时间', width: 100, sort: true}
+                    , {field: 'globalEventID', title: '事件id', width: 120}
+                    , {field: 'mentionIdentifier', title: 'url', minWidth: 100}
+                ]
+            ]
+            , even: true
+            , page: true //是否显示分页
+            , limits: [5, 10, 100, 500]
+            , limit: 5 //每页默认显示的数量
+            , done: function(res, curr, count){
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                console.log(res);
+                //得到当前页码
+                console.log(curr);
+                //得到数据总量
+                console.log(count);
+            }
+        });
+
+        table.on('tool(test)', function (obj) {
+
+            if (obj.event === 'del') {
+                layer.confirm('确定要删除该条数据吗', function (index) {
+                    layer.msg("正在删除啦....", {icon: 1, time: 1000});
+                    return;
+                });
+            } else if (obj.event === "edit") {
+                var iidd = obj.data.id
+                var glid = obj.data.globalEventID
+                $.ajax({
+                    type:'post',
+                    url:'/showTheme',
+                    data: {
+                        id: iidd,
+                        globalEventID: glid,
+                    },
+                    dataType: "json",
+                    async:true,
+                    success : function(result) {
+                        // console.log(result)
+                        var ac1 = result.actor1Name;
+                        var ac2 = result.actor2Name;
+                        var xxx = result.theme;
+                        var yyy = result.country;
+                        $('.editDiv').html("");
+                        var Htm = "";
+                        Htm += "<form id=\"form1\" class=\"layui-form\" action=\"\" style=\"margin: 15px 15px\"><div class=\"layui-form-item\">";
+                        if(result.length == 0) Htm += "暂无分类可选</div></form>"
+                        else {
+                            // 对象1
+                            Htm += "<div class=\"layui-inline\">" +
+                                "<DIV class=\"layui-input-inline\">" +
+                                "    <TABLE  cellSpacing =0  cellPadding =0  border =0 >" +
+                                "        <TBODY >" +
+                                "        <TR >" +
+                                "            <TD >" +
+                                "                <SELECT  lay-filter=\"id1\" id = 'id1' name =\"districtSelect\"  style =\"LEFT: 0px; TOP: 0px; CLIP: rect(0px auto auto 80px); POSITION: absolute\"  >" +
+                                "                    <OPTION  value =\"" + ac1 + "\" >" + ac1 + "</OPTION >" +
+                                "                    <OPTION  value =\"" + ac2 + "\" >" + ac2 + "</OPTION >" +
+                                "                </SELECT >" +
+                                "                <INPUT  class=\"layui-input\" id =\"obj1\"  name =\"district\"  style =\"LEFT: 0px; TOP: 0px; WIDTH: 85%; POSITION: absolute\" >" +
+                                "            </TD >" +
+                                "        </TR >" +
+                                "        </TBODY >" +
+                                "    </TABLE >" +
+                                "</DIV >" +
+                                "</div>"
+                            // 对象2
+                            Htm += "<div class=\"layui-inline\">" +
+                                "                <div class=\"layui-input-inline\">" +
+                                "                    <select name=\"quiz\" id='select1'>" +
+                                "                       <option value=\"\">请选择主题</option>";
+                            for (var i = 0; i < xxx.length; i++) {
+                                var id = xxx[i].id;
+                                var name = xxx[i].name;
+                                // console.log(id + " --- " + name);
+                                // else Htm += "<input type='checkbox' name='tag' value='" + name + "' title='" + name + "'>";
+                                    Htm += "<option value=\"" + name + "\">" + name + "</option>";
+                            }
+                            Htm += "                    </select>" +
+                                "                </div>" +
+                                "            </div>";
+                            // 对象3
+                            Htm += "<div class=\"layui-inline\">" +
+                                "<DIV class=\"layui-input-inline\">" +
+                                "    <TABLE  cellSpacing =0  cellPadding =0  border =0 >" +
+                                "        <TBODY >" +
+                                "        <TR >" +
+                                "            <TD >" +
+                                "                <SELECT  lay-filter=\"id2\" id = 'id2' name =\"districtSelect\"  style =\"LEFT: 0px; TOP: 0px; CLIP: rect(0px auto auto 80px); POSITION: absolute\"  >";
+                            Htm += "<OPTION  value =\"" + ac1 + "\" >" + ac1 + "</OPTION >";
+                            Htm += "<OPTION  value =\"" + ac2 + "\" >" + ac2 + "</OPTION >";
+                                //
+                                // "                    <OPTION  value =\"中国\" > 中国 </OPTION >" +
+                                // "                    <OPTION  value =\"美国\" > 美国 </OPTION >" +
+                                // "                    <OPTION  value =\"俄罗斯\" > 俄罗斯 </OPTION>" +
+                                // "                    <OPTION  value =\"乌克兰\" > 乌克兰 </OPTION >" +
+                                // "                    <OPTION  value =\"日本\" > 日本 </OPTION >" +
+                                // "                    <OPTION  value =\"韩国\" > 韩国 </OPTION >" +
+                                // "                    <OPTION  value =\"朝鲜\" > 朝鲜 </OPTION >" +
+                                // "                    <OPTION  value =\"泰国\" > 泰国 </OPTION >" +
+                                // "                    <OPTION  value =\"欧盟\" > 欧盟 </OPTION >" +
+                                // "                    <OPTION  value =\"法国\" > 法国 </OPTION >" +
+                                // "                    <OPTION  value =\"意大利\" > 意大利 </OPTION >" +
+                                // "                    <OPTION  value =\"英国\" > 英国 </OPTION >" +
+                                // "                    <OPTION  value =\"德国\" > 德国 </OPTION >" +
+                                // "                    <OPTION  value =\"澳大利亚\" > 澳大利亚 </OPTION >" +
+                                // "                    <OPTION  value =\"加拿大\" > 加拿大 </OPTION >" +
+                                // "                    <OPTION  value =\"巴西\" > 巴西 </OPTION >" +
+                                // "                    <OPTION  value =\"缅甸\" > 缅甸 </OPTION >" +
+                                // "                    <OPTION  value =\"希腊\" > 希腊 </OPTION >" +
+                                // "                    <OPTION  value =\"印度\" > 印度 </OPTION >" +
+                                // "                    <OPTION  value =\"荷兰\" > 荷兰 </OPTION >" +
+                                // "                    <OPTION  value =\"西班牙\" > 西班牙 </OPTION >" +
+                                // "                    <OPTION  value =\"新加坡\" > 新加坡 </OPTION >" +
+                                // "                    <OPTION  value =\"土耳其\" > 土耳其 </OPTION >" +
+                                // "                    <OPTION  value =\"越南\" > 越南 </OPTION >" +
+                            Htm += "                </SELECT >" +
+                                "                <INPUT  class=\"layui-input\" id =\"obj2\"  name =\"district\"  style =\"LEFT: 0px; TOP: 0px; WIDTH: 85%; POSITION: absolute\" >" +
+                                "            </TD >" +
+                                "        </TR >" +
+                                "        </TBODY >" +
+                                "    </TABLE >" +
+                                "</DIV >" +
+                                "</div>";
+                            // 对象4
+                            Htm += "<div class=\"layui-inline\">" +
+                                "                <div class=\"layui-input-inline\">" +
+                                "                    <select name=\"quiz\" id='select2'>" +
+                                "                       <option value=\"\">请选择主题</option>";
+                            for (var i = 0; i < xxx.length; i++) {
+                                var id = xxx[i].id;
+                                var name = xxx[i].name;
+                                // console.log(id + " --- " + name);
+                                // else Htm += "<input type='checkbox' name='tag' value='" + name + "' title='" + name + "'>";
+                                Htm += "<option value=\"" + name + "\">" + name + "</option>";
+                            }
+                            Htm += "                    </select>" +
+                                "                </div>" +
+                                "            </div>";
+                            // 对象5
+                            Htm += "<div class=\"layui-inline\">" +
+                                "<DIV class=\"layui-input-inline\">" +
+                                "    <TABLE  cellSpacing =0  cellPadding =0  border =0 >" +
+                                "        <TBODY >" +
+                                "        <TR >" +
+                                "            <TD >" +
+                                "                <SELECT  lay-filter=\"id3\" id = 'id3' name =\"districtSelect\"  style =\"LEFT: 0px; TOP: 0px; CLIP: rect(0px auto auto 80px); POSITION: absolute\"  >";
+                            for (var i = 0; i < yyy.length; i++) {
+                                var name = yyy[i];
+                                Htm += "<option value=\"" + name + "\">" + name + "</option>";
+                            }
+                            Htm += "                </SELECT >" +
+                                "                <INPUT  class=\"layui-input\" id =\"obj3\"  name =\"district\"  style =\"LEFT: 0px; TOP: 0px; WIDTH: 85%; POSITION: absolute\" >" +
+                                "            </TD >" +
+                                "        </TR >" +
+                                "        </TBODY >" +
+                                "    </TABLE >" +
+                                "</DIV >" +
+                                "</div>"
+
+                            Htm += "</div></form>";
+                        }
+                        layer.open({
+                            title: '对当前文本内容添加主题',
+                            type: 1,
+                            move: false,
+                            content: $('.editDiv').append(Htm),
+                            btn: ['提交', '取消'],
+                            area: ['90%', '85%'],
+                            resize: false,
+                            scrollbar: false,
+                            success: function (layero, index) {
+                                form.render()
+                                // console.log(layero, index)
+                            },
+                            yes: function(index, layero){
+                                var ob1 = document.getElementById('obj1').value;
+                                var ob2 = $("#select1").val();
+                                var ob3 = document.getElementById('obj2').value;
+                                var ob4 = $("#select2").val();
+                                var ob5 = document.getElementById('obj3').value;
+                                var ans = ob1 + ob2 + ob3 + ob4 + ob5;
+                                // console.log(ob1 + " " + ob2 + " " + ob3 + " " + ob4 + " " + ob5);
+                                // console.log(ans);
+
+                                // // alert(xx + " + " + iidd + " " + glid + " --- ")
+                                $.ajax({
+                                    type:'post',
+                                    url:'/updateTheme',
+                                    data:{
+                                        id: iidd,
+                                        globalEventID: glid,
+                                        theme: ans,
+                                        a1: ob1,
+                                        a2: ob2,
+                                        a3: ob3,
+                                        a4: ob4,
+                                        a5: ob5,
+                                    },
+                                    dataType:'text',
+                                    async:true,
+                                    success : function(result) {
+                                        table.reloadData('test');
+                                    },error : function() {
+                                        console.log('访问失败');
+                                    }
+                                });
+
+                                layer.close(index);
+                            },
+                        });
+                    },error : function() {
+                        layer.msg("查询失败");
+                    }
+                });
+
+
+            }
+
+        })
+
+
+    });
+
+</script>
+
+
+</body>
+</html>

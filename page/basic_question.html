@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>空间认知心理测试_基础题目</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <style>
+        .layui-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .view-img{
+            width: 90%; max-width: 90%; height: auto
+        }
+        @media screen and (min-width: 451px) {
+            .layui-col-xs11.layui-col-md11.image-container img {
+                width: 450px ; /*!important;*/
+            }
+            .layui-col-xs11.layui-col-md11.image-container video {
+                width: 450px ; /*!important;*/
+            }
+        }
+        /* 倒计时 */
+        .layui-progress {
+            position: relative;
+            float: left;
+        }
+        .countdown{
+            float: left;
+        }
+        /*倒计时*/
+        #loader {
+            animation: loader 10s cubic-bezier(0.7, 0, 0.2, 1) infinite;
+            height: 40px;
+            width: 41px;
+            position: relative;
+            /*top: 50%;*/
+            /*left: 50%;*/
+            margin: 0px 0px 0px 0px;
+        }
+        @keyframes loader {
+            90% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(180deg);
+            }
+        }
+        #loader #top {
+            animation: top 10s linear infinite;
+            border-top: 20px solid #16b777;
+            border-right: 20px solid transparent;
+            border-left: 20px solid transparent;
+            height: 0px;
+            width: 1px;
+            transform-origin: 50% 100%;
+        }
+        @keyframes top {
+            90% {
+                transform: scale(0);
+            }
+            100% {
+                transform: scale(0);
+            }
+        }
+        .font2 > p {
+            font-size: 15px;
+            /*text-shadow: 1px 1px 1px black;*/
+            color: #800000;
+            text-align: left;
+        }
+        .timu_box{
+            margin-top:10px;
+            width:100%; height:130px;
+            padding:1.2rem 1.8rem 1.5rem 1.5rem;  /* 上下右左 */
+            box-sizing:border-box;
+            background:url('../img/question.png');
+            background-size: 100% 100%;
+        }
+        .text1{
+            font-size:0.8rem;
+            line-height:1rem;
+            color:#d7e1ff;
+            font-family: "黑体";
+            font-weight: bold;
+            /*text-shadow: -2px 2px 0.2rem #000,2px -2px 0.2rem #000,2px 2px 0.2rem #000,-2px -2px 0.2rem #000;*/
+        }
+        .xuanxiang {
+            padding: 13px 13px 10px 13px;
+            position: relative;
+            display: inline-block;
+            width:95%; height: auto;
+            background:url('../img/question.png');
+            background-size:100% 100%;
+            color: #d7e1ff;
+            margin-top: 10px;
+            font-family: "黑体";
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .xx_text {
+            font-size:16px;
+            margin-left: 25px;
+            margin-top: 3px;
+        }
+        .selected {
+            background-image: url('../img/q2.png');
+            padding: 10px;
+            position: relative;
+            display: inline-block;width:95%; height: auto;
+            /*background:url('../img/x.png');*/
+            background-size:100% 100%;
+            color: #d7e1ff;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+    </style>
+    <script src="../layui/layui.js" charset="utf-8"></script>
+</head>
+<body style="background:url('../img/background_new2.png')">
+<div class="layui-row">
+    <div class="layui-col-xs11 layui-col-md11" style="text-align: center; margin-top: 10px;">
+        <div class="grid-demo grid-demo-bg2" id="tag1">
+            <img style="height: 100px; width: auto" src="../img/logo.png">
+<!--            <img style="width: 100%; height: auto;" src="../img/fenge.png">-->
+            <div id = "title" style="font-size: 16px; text-align: left;line-height: 1.5" class="timu_box text1">
+<!--                （1）在日常生活中找路时， 你更加依赖电子导航还是凭借经验和记忆？-->
+            </div>
+        </div>
+        <ul style="margin-top: 30px; text-align: left">
+            <li id="A" onclick="selectOption(1)" class="xuanxiang">
+                <p class="xx_text">
+<!--                    A、电子导航-->
+                </p>
+            </li>
+            <li id="B" onclick="selectOption(2)" class="xuanxiang">
+                <p class="xx_text">
+<!--                    B、经验和记忆-->
+                </p>
+            </li>
+            <li id="C" onclick="selectOption(3)" class="xuanxiang">
+                <p class="xx_text">
+<!--                    C、两种情况一半一半-->
+                </p>
+            </li>
+            <li id="D" onclick="selectOption(4)" class="xuanxiang">
+                <p class="xx_text">
+<!--                    D、都不是-->
+                </p>
+            </li>
+
+        </ul>
+    </div>
+</div>
+<div class="layui-row">
+    <div class="layui-col-xs11 layui-col-md11" style="text-align: center; margin-top: 20px;">
+        <div class="site-demo-button" id="view_button" style="margin-top: 20px; margin-bottom: 0;">
+<!--            <button style="height:50px; width:150px; background:url('../img/pre_page.png'); background-size:100% 100%; color: black" class="layui-btn site-demo-active" data-type="loading" onclick="pre_page()"><strong>上一题</strong></button>-->
+            <button style="height:50px; width:150px; background:url('../img/next_page.png'); background-size:100% 100%; color: black" class="layui-btn site-demo-active" data-type="loading" onclick="next_page()"><strong>下一题</strong></button>
+        </div>
+        <div class="site-demo-button" id="tiaoguo" style="margin-top: 15px; margin-bottom: 0; text-align: center"></div>
+
+    </div>
+</div>
+<div class="layui-row">
+    <div class="layui-col-xs11 layui-col-md11 image-container" style="text-align: right; margin-top: 5px;">
+        <div class="layui-btn-container" id="np"></div>
+    </div>
+</div>
+<div class="layui-row" id="retime"></div>
+
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script>
+    localStorage.setItem("7_r", 110)
+    localStorage.setItem("7_center_x", 150);
+    localStorage.setItem("7_center_y", 125);
+    localStorage.setItem("7_a_x", 0);
+    localStorage.setItem("7_a_y", 0);
+    localStorage.setItem("7_b_x", 0);
+    localStorage.setItem("7_b_y", 0);
+    localStorage.setItem("tiaoguo", 0);
+    document.getElementById("tiaoguo").innerHTML = "<span style='text-decoration: underline; color: white' onclick='tiaoguo()'>我已经答过，直接跳到第8题</span>"
+    function tiaoguo() {
+        localStorage.setItem("tiaoguo", 1);
+        window.location.replace("8.html")
+    }
+
+
+    const q_title = [
+        "（1）在日常生活中找路时， 你更加依赖电子导航还是凭借经验和记忆？",
+        "（2）你是否觉得在3D虚拟世界游戏中比在现实世界中更难感知方向或距离等空间信息？",
+        "（3）你经常觉得自己脑中清楚某区域的空间分布，但却难以向他人讲述吗？",
+        "（4）当你处于建筑密集的环境中时，会觉得比平时更难想象所处空间的分布吗？",
+        "（5）你觉得一片湖、一片草地（面状对象）/一栋高楼、一个报刊亭（点状对象）/一条河、一条公路（线状对象）中，哪一类的空间位置更难以确定或向他人描述？",
+        "（6）你经常能敏锐地感受到某个视频中的空间场景与现实世界产生了偏差吗，如方位偏差、分布扭曲？"
+    ]
+    const q_xuanxiang = [
+        ["A、电子导航", "B、经验和记忆", "C、两种情况一半一半", "D、都不是"],
+        ["A、虚拟游戏世界中更难", "B、空间感知难度相同", "C、虚拟游戏世界中更容易", "D、我没有玩过虚拟世界游戏"],
+        ["A、我脑中想象得到，也可以清晰快速地用语言向他人描述", "B、我脑中想象得到，向他人描述时有点不确定", "C、我脑中想象得到，但难以向他人用语言描述出来", "D、我脑中想象不到，也说不出来"],
+        ["A、密集环境与稀疏环境对我来说一样", "B、密集环境中比稀疏环境更难理解所处空间的分布", "C、密集环境中比稀疏环境中更容易理解所处空间的分布", "D、我不确定"],
+        ["A、面状对象最困难", "B、点状对象最困难", "C、线状地物最困难", "D、对点、面、线状的对象进行定位对我来说一样"],
+        ["A、我能捕捉到视频与现实世界空间信息的偏差，并清晰地表述出来", "B、我能感受到视频与现实世界空间信息有差异，但我无法确定哪里产生了偏差", "C、我只能看到建筑的形状出现了偏差，但无法捕捉到空间信息的偏差", "D、我觉得视频与现实世界完全没有偏差"],
+    ]
+    let f7 = localStorage.getItem("7")
+    f7 = parseInt(f7)
+    let q_id = 1;
+    if(f7 === 1) {
+        q_id = localStorage.getItem("qid")
+        document.getElementById("view_button").innerHTML =
+            "<button style=\"height:50px; width:150px; background:url('../img/pre_page.png'); background-size:100% 100%; color: black\" class=\"layui-btn site-demo-active\" data-type=\"loading\" onclick=\"pre_page()\"><strong>上一题</strong></button>\n" +
+            "<button style=\"height:50px; width:150px; background:url('../img/next_page.png'); background-size:100% 100%; color: black\" class=\"layui-btn site-demo-active\" data-type=\"loading\" onclick=\"next_page1()\"><strong>下一题</strong></button>\n"
+    }
+    else{
+        localStorage.setItem("qid", 1);
+        q_id = localStorage.getItem("qid")
+        document.getElementById("view_button").innerHTML =
+            "<button style=\"height:50px; width:150px; background:url('../img/next_page.png'); background-size:100% 100%; color: black\" class=\"layui-btn site-demo-active\" data-type=\"loading\" onclick=\"next_page()\"><strong>下一题</strong></button>\n"
+    }
+    console.log("qid = " + q_id + " ans = " + localStorage.getItem("q" + q_id + "_answer"))
+    document.getElementById("title").innerText = q_title[q_id-1];
+    document.getElementById("A").innerText = q_xuanxiang[q_id - 1][0];
+    document.getElementById("B").innerText = q_xuanxiang[q_id - 1][1];
+    document.getElementById("C").innerText = q_xuanxiang[q_id - 1][2];
+    document.getElementById("D").innerText = q_xuanxiang[q_id - 1][3];
+    const lis = document.querySelectorAll('li');
+    lis.forEach(li => {
+        li.classList.remove('selected');
+    });
+    // 将用户的历史选项展示到题目上
+    let answer0 = localStorage.getItem("q"+q_id+"_answer")
+    answer0 = parseInt(answer0)
+    selectOption(answer0)
+
+
+    function next_page1() {
+        let qid = localStorage.getItem("qid")
+        qid = parseInt(qid)
+        let an = localStorage.getItem("q"+qid+"_answer")
+        an = parseInt(an)
+        if(an !== 1 && an !== 2 && an !== 3 && an !== 4) {
+            layer.msg("您还未进行选择", {icon: 0,time:1000})
+            return
+        }
+        localStorage.setItem("qid", 7)
+        window.location.replace("7.html")
+    }
+    function pre_page(){
+        let qid = localStorage.getItem("qid")
+        qid = parseInt(qid)
+        qid -= 1
+        // console.log(qid)
+        if(qid === 1) {
+            document.getElementById("view_button").innerHTML =
+                "<button style=\"height:50px; width:150px; background:url('../img/next_page.png'); background-size:100% 100%; color: black\" class=\"layui-btn site-demo-active\" data-type=\"loading\" onclick=\"next_page()\"><strong>下一题</strong></button>\n"
+        }
+        else {
+            document.getElementById("view_button").innerHTML =
+                "<button style=\"height:50px; width:150px; background:url('../img/pre_page.png'); background-size:100% 100%; color: black\" class=\"layui-btn site-demo-active\" data-type=\"loading\" onclick=\"pre_page()\"><strong>上一题</strong></button>\n" +
+                "<button style=\"height:50px; width:150px; background:url('../img/next_page.png'); background-size:100% 100%; color: black\" class=\"layui-btn site-demo-active\" data-type=\"loading\" onclick=\"next_page()\"><strong>下一题</strong></button>\n"
+        }
+        document.getElementById("title").innerText = q_title[qid-1];
+        document.getElementById("A").innerText = q_xuanxiang[qid - 1][0];
+        document.getElementById("B").innerText = q_xuanxiang[qid - 1][1];
+        document.getElementById("C").innerText = q_xuanxiang[qid - 1][2];
+        document.getElementById("D").innerText = q_xuanxiang[qid - 1][3];
+        localStorage.setItem("qid", qid)
+        const lis = document.querySelectorAll('li');
+        lis.forEach(li => {
+            li.classList.remove('selected');
+        });
+        // 将用户的历史选项展示到题目上
+        let answer = localStorage.getItem("q"+qid+"_answer")
+        answer = parseInt(answer)
+        selectOption(answer)
+    }
+
+
+    function next_page(){
+        let qid = localStorage.getItem("qid")
+        qid = parseInt(qid)
+        let an = localStorage.getItem("q"+qid+"_answer")
+        an = parseInt(an)
+        if(an !== 1 && an !== 2 && an !== 3 && an !== 4) {
+            layer.msg("您还未进行选择", {icon: 0,time:1000})
+            return
+        }
+        qid += 1
+        // console.log(qid)
+        if(qid != 6) {
+           document.getElementById("view_button").innerHTML =
+               "<button style=\"height:50px; width:150px; background:url('../img/pre_page.png'); background-size:100% 100%; color: black\" class=\"layui-btn site-demo-active\" data-type=\"loading\" onclick=\"pre_page()\"><strong>上一题</strong></button>\n" +
+               "<button style=\"height:50px; width:150px; background:url('../img/next_page.png'); background-size:100% 100%; color: black\" class=\"layui-btn site-demo-active\" data-type=\"loading\" onclick=\"next_page()\"><strong>下一题</strong></button>\n"
+        }
+        else {
+            document.getElementById("view_button").innerHTML =
+                "<button style=\"height:50px; width:150px; background:url('../img/pre_page.png'); background-size:100% 100%; color: black\" class=\"layui-btn site-demo-active\" data-type=\"loading\" onclick=\"pre_page()\"><strong>上一题</strong></button>\n" +
+                "<button style=\"height:50px; width:150px; background:url('../img/next_page.png'); background-size:100% 100%; color: black\" class=\"layui-btn site-demo-active\" data-type=\"loading\" onclick=\"next_page1()\"><strong>下一题</strong></button>\n"
+        }
+        document.getElementById("title").innerText = q_title[qid-1];
+        document.getElementById("A").innerText = q_xuanxiang[qid - 1][0];
+        document.getElementById("B").innerText = q_xuanxiang[qid - 1][1];
+        document.getElementById("C").innerText = q_xuanxiang[qid - 1][2];
+        document.getElementById("D").innerText = q_xuanxiang[qid - 1][3];
+        localStorage.setItem("qid", qid)
+        const lis = document.querySelectorAll('li');
+        lis.forEach(li => {
+            li.classList.remove('selected');
+        });
+        // 将用户的历史选项展示到题目上
+        let answer = localStorage.getItem("q"+qid+"_answer")
+        answer = parseInt(answer)
+        selectOption(answer)
+        // console.log("qid = " + qid + " ans = " + localStorage.getItem("q" + qid + "_answer"))
+    }
+
+    // 禁止回退
+    window.onload = function() {
+        if(window.history && window.history.pushState) {
+            window.onpopstate=function () {
+                window.history.pushState('forward', null, '');
+                window.history.forward(1);
+            };
+        }
+        window.history.pushState('forward', null, '');//在IE中必须得有这两行
+        window.history.forward(1);
+    }
+    if(window.history && window.history.pushState) {
+        window.onpopstate=function () {
+            window.history.pushState('forward', null, '');
+            window.history.forward(1);
+        };
+    }
+    window.history.pushState('forward', null, '');//在IE中必须得有这两行
+    window.history.forward(1);
+
+
+    /* 修改字体大小适配 */
+    // 获取设备的屏幕宽度
+    var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    // 根据设计稿和适配规则计算基准字体大小
+    var baseFontSize = screenWidth / 750 * 16; // 假设设计稿宽度为750px，基准字体大小为16px
+    // 设置根元素的字体大小
+    document.documentElement.style.fontSize = baseFontSize + 'px';
+
+
+    // 修改点击的选项背景
+    function selectOption(option) {
+        const lis = document.querySelectorAll('li');
+        lis.forEach(li => {
+            li.classList.remove('selected');
+        });
+
+        const selectedOption = document.querySelector(`li:nth-child(${option})`);
+        let x = selectedOption.id, ind = 0;
+        if(x === "A") ind = 1
+        else if(x === "B") ind = 2
+        else if(x === "C") ind = 3
+        else if(x === "D") ind = 4
+        let qid = localStorage.getItem("qid")
+        // console.log(qid + " " + ind)
+        qid = qid.toString()
+        localStorage.setItem("q"+qid+"_answer", ind)
+
+        selectedOption.classList.add('selected');
+    }
+    // // 判断用户点击的是第几个
+    // $(document).ready(function (){
+    //     $('ul li').bind('click', function (){
+    //         let ind = $(this).index();
+    //         ind++;
+    //         let qid = localStorage.getItem("qid")
+    //         console.log(qid + " " + ind)
+    //         qid = qid.toString()
+    //         localStorage.setItem("q"+qid+"_answer", ind)
+    //     })
+    // });
+
+</script>
+</body>
+</html>

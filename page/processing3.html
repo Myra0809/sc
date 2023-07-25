@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>空间认知心理测试-答题阶段</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <style>
+        .layui-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        @media screen and (min-width: 451px) {
+            .layui-col-xs11.layui-col-md11.image-container img {
+                width: 450px ; /*!important;*/
+            }
+        }
+        /* 倒计时 */
+        .layui-progress {
+            position: relative;
+            float: left;
+        }
+        .countdown{
+            float: left;
+        }
+        /* 圆 */
+        .circle_container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+    </style>
+    <script src="../layui/layui.js" charset="utf-8"></script>
+</head>
+<body>
+<ul id="biuuu_city_list">
+    <div class="layui-row">
+        <div class="layui-col-xs11 layui-col-md11" style="text-align: center;">
+            <div class="grid-demo grid-demo-bg2">
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 25px;">
+                    <legend style="margin-left:0px;"><b>场景回溯</b></legend>
+                </fieldset>
+                <div style="width: 88%" class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="demo">
+                    <div class="layui-progress-bar layui-bg-green" lay-percent="0%"></div>
+                </div>
+                <div style="width: 12%" id="countdown" class="countdown">01:00</div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-col-xs11 layui-col-md11 image-container" style="text-align: center; margin-top: 25px;">
+            <blockquote class="layui-elem-quote" style="margin-top: 10px;text-align: left;">
+                欢迎来到空间认知的最终挑战！想象您是一位地理侦查员，站在观测点O，将方向变成圆环方位，距离则以不同半径的圆环展现，拿起您的画笔在下图中拖动三条线，通过您的空间直觉将ABC三个地理实体拖动到您认为相对于O点最合适的位置。</blockquote>
+            <div class="layui-panel">
+                <div class = "circle_container">
+                    <svg width="250" height="250" id="svg-container">
+                        <defs>
+                            <marker id="arrowheadB" markerWidth="4" markerHeight="4" refX="2" refY="2" orient="auto">
+                                <circle id="Bcir" cx="2" cy="2" r="1" fill="#FF0000"/>
+                            </marker>
+                            <marker id="arrowheadC" markerWidth="4" markerHeight="4" refX="2" refY="2" orient="auto">
+                                <circle id="Ccir" cx="2" cy="2" r="1" fill="#4B0082"/>
+                            </marker>
+                            <marker id="arrowheadA" markerWidth="4" markerHeight="4" refX="2" refY="2" orient="auto">
+                                <circle id="Acir" cx="2" cy="2" r="1" fill="#FFD700"/>
+                            </marker>
+                        </defs>
+                        <g id="markerA" style="cursor: pointer;">
+                            <use xlink:href="#arrowheadA" x="100" y="100" />
+                        </g>
+                        <circle id="drawing-area" cx="125" cy="125" r="90" fill="none" stroke="black" />  <!-- cx cy圆心xy轴坐标 r为半径 -->
+                        <circle id="drawing-area" cx="125" cy="125" r="67.5" fill="none" stroke="black" />  <!-- cx cy圆心xy轴坐标 r为半径 -->
+                        <circle id="drawing-area" cx="125" cy="125" r="45" fill="none" stroke="black" />  <!-- cx cy圆心xy轴坐标 r为半径 -->
+                        <circle id="drawing-area" cx="125" cy="125" r="22.5" fill="none" stroke="black" />  <!-- cx cy圆心xy轴坐标 r为半径 -->
+                        <circle style="user-select: none;" cx="125" cy="125" r="2" fill="black" /> <!-- 在 (125, 125) 位置创建圆心的黑点 -->
+                        <line id="arrow-lineA" x1="125" y1="125" x2="125" y2="35" stroke="#FFD700" stroke-width="4" marker-end="url(#arrowheadA)" /> <!-- 创建初始的直线箭头 -->
+                        <line id="arrow-lineB" x1="125" y1="125" x2="35" y2="125" stroke="#FF0000" stroke-width="4" marker-end="url(#arrowheadB)" /> <!-- 创建初始的直线箭头 -->
+                        <line id="arrow-lineC" x1="125" y1="125" x2="215" y2="125" stroke="#4B0082" stroke-width="4" marker-end="url(#arrowheadC)" /> <!-- 创建初始的直线箭头 -->
+                        <!--
+                            x1：直线起点的 x 坐标
+                            y1：直线起点的 y 坐标
+                            x2：直线终点的 x 坐标
+                            y2：直线终点的 y 坐标
+                            stroke：直线的颜色
+                            stroke-width：直线的宽度
+                        -->
+                        <text id="O" style="user-select: none;" x="125" y="140" font-size="18px">O</text>
+                        <text id="A" style="user-select: none;" x="120" y="25" font-size="18px" fill="#FFD700">A</text>
+                        <text id="B" style="user-select: none;" x="20" y="130" font-size="18px" fill="#FF0000">B</text>
+                        <text id="C" style="user-select: none;" x="220" y="130" font-size="18px" fill="#4B0082">C</text>
+                    </svg>
+                </div>
+            </div>
+            <div class="layui-btn-group" style="margin-top: 20px; margin-bottom: 0;">
+<!--                <button type="button" class="layui-btn" id="buttonB" onclick="clickB('B', 'arrow-line')">编辑B方位</button>-->
+<!--                <button type="button" class="layui-btn" id="buttonC" onclick="clickC()">编辑C方位</button>-->
+            </div>
+            <div class="site-demo-button" style="margin-top: 20px; margin-bottom: 0;">
+                <button class="layui-btn site-demo-active" data-type="loading" onclick="submit()">提交</button>
+            </div>
+            <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 20px;text-align: center;">
+                <b>请注意：倒计时结束后将自动提交</b>
+            </blockquote>
+        </div>
+    </div>
+</ul>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/circle.js"></script>
+<script>
+    // 禁止回退
+    (function(){
+        if(window.history && window.history.pushState) {
+            window.onpopstate=function () {
+                window.history.pushState('forward', null, '');
+                window.history.forward(1);
+            };
+        }
+        window.history.pushState('forward', null, '');//在IE中必须得有这两行
+        window.history.forward(1);
+    })();
+    if(window.history && window.history.pushState) {
+        window.onpopstate=function () {
+            window.history.pushState('forward', null, '');
+            window.history.forward(1);
+        };
+    }
+    window.history.pushState('forward', null, '');//在IE中必须得有这两行
+    window.history.forward(1);
+
+    // 阻止默认行为滚动
+    document.addEventListener("touchmove", function(event) {
+        event.preventDefault(); // 阻止默认的触摸滚动行为
+    }, { passive: false });
+
+
+    localStorage.setItem("r", 90)
+    localStorage.setItem("center_x", 125);
+    localStorage.setItem("center_y", 125);
+    localStorage.setItem("a_x", 125);
+    localStorage.setItem("a_y", 35);
+    localStorage.setItem("b_x", 35);
+    localStorage.setItem("b_y", 125);
+    localStorage.setItem("c_x", 215);
+    localStorage.setItem("c_y", 125);
+    /* 修改字体大小适配 */
+    // 获取设备的屏幕宽度
+    var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    // 根据设计稿和适配规则计算基准字体大小
+    var baseFontSize = screenWidth / 750 * 16; // 假设设计稿宽度为750px，基准字体大小为16px
+    // 设置根元素的字体大小
+    document.documentElement.style.fontSize = baseFontSize + 'px';
+
+
+    // 倒计时
+    layui.use('element', function(){
+        var $ = layui.jquery
+            ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+        var countDown = 60; // 设置倒计时时间，单位为秒
+        var remainingTime = countDown; // 剩余时间，初始为倒计时时间
+        var timer = setInterval(function () {
+            remainingTime--;
+            if (remainingTime <= 0) {
+                remainingTime = 0;
+                localStorage.setItem("ans_time", remainingTime)
+                clearInterval(timer);
+                // othis.removeClass(DISABLED);
+                // submit()
+            }
+            localStorage.setItem("ans_time", remainingTime)
+            var description = '剩余时间：' + remainingTime + '秒'; // 显示剩余时间描述
+            remainingTime = remainingTime < 10 ? "0"+remainingTime : remainingTime;
+            // console.log(description)
+            document.getElementById("countdown").innerHTML="00:" + remainingTime.toString()
+            element.progress('demo', Math.floor((countDown - remainingTime) / countDown * 100) + '%', description);
+        }, 1000);
+    });
+
+    function submit() {
+        // layer.msg("提交成功", { time: 2000 })
+        let ans = {
+            "ax": localStorage.getItem("a_x"),
+            "ay": localStorage.getItem("a_y"),
+            "bx": localStorage.getItem("b_x"),
+            "by": localStorage.getItem("b_y"),
+            "cx": localStorage.getItem("c_x"),
+            "cy": localStorage.getItem("c_y"),
+            "centerx": localStorage.getItem("center_x"),
+            "centery": localStorage.getItem("center_y"),
+            "r": localStorage.getItem("r"),
+            "pid": localStorage.getItem("video_id"),
+            "ip": "",
+            "ans_time": localStorage.getItem("ans_time"),
+            "video_time": localStorage.getItem("video_time")
+        }
+        console.log(JSON.stringify(ans));
+        // alert(ans)
+        $.ajax({
+            type:'post',
+            url:'/insertBias',
+            data: ans,
+            dataType : "json",
+            async: true,
+            success : function(result) {
+                if(result){
+                    console.log("result = " + result['dir'] + " " + result['dis'])
+                    localStorage.setItem("dir", result['dir']);
+                    localStorage.setItem("dis", result['dis']);
+                    localStorage.setItem("imagination", result['imagination']);
+                    localStorage.setItem("memory", result['memory']);
+                    localStorage.setItem("reason", result['reason']);
+                    localStorage.setItem("score", result['score']);
+                }else{
+                    console.log(result);
+                }
+            },error : function() {
+                // alert("no")
+                console.log('访问失败');
+            }
+        });
+        console.log(JSON.stringify(ans))
+        let pp = parseInt(localStorage.getItem('pp')) + 1
+        localStorage.setItem('pp', pp.toString())
+        setTimeout(function() {
+            // 延时两秒后执行的代码
+            window.location.href = "ans.html"
+        }, 2000);
+    }
+
+
+
+
+
+</script>
+</body>
+</html>

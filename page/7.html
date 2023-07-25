@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>空间认知心理测试_第七题</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <style>
+        .layui-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .view-img{
+            width: 90%; max-width: 90%; height: auto
+        }
+        @media screen and (min-width: 451px) {
+            .layui-col-xs11.layui-col-md11.image-container img {
+                width: 450px ; /*!important;*/
+            }
+            .layui-col-xs11.layui-col-md11.image-container video {
+                width: 450px ; /*!important;*/
+            }
+        }
+        .timu_box{
+            margin-top:10px;
+            width:100%;
+            /*height:175px;*/
+            padding:1.3rem 1.8rem 1.5rem 1.5rem;  /* 上下右左 */
+            box-sizing:border-box;
+            background:url('../img/question.png');
+            background-size: 100% 100%;
+        }
+        .text1{
+            font-size:0.8rem;
+            line-height:1rem;
+            color:#d7e1ff;
+            font-family: "黑体";
+            font-weight: bold;
+            /*text-shadow: -2px 2px 0.2rem #000,2px -2px 0.2rem #000,2px 2px 0.2rem #000,-2px -2px 0.2rem #000;*/
+        }
+    </style>
+    <script src="../layui/layui.js" charset="utf-8"></script>
+</head>
+<body style="background:url('../img/background_new2.png')">
+<div class="layui-row">
+    <div class="layui-col-xs11 layui-col-md11" style="text-align: center; margin-top: 10px;">
+        <div class="grid-demo grid-demo-bg2" id="tag1">
+            <img style="height: 50px; width: auto" src="../img/logo.png">
+<!--            <img style="width: 100%; height: auto;" src="../img/fenge.png">-->
+        </div>
+    </div>
+</div>
+<div class="layui-row layui-col-space10">
+    <div class="layui-col-xs10 layui-col-md10" style="text-align: left; margin-top: 10px; " id="tag">
+        <div id = "title" style="font-size: 16px; text-align: left;line-height: 1.2" class="timu_box text1">
+            <p style="color: #d7e1ff; margin-top: 5px;">（7）下面，将会为你播放一个360°全景视频，视频下方是对应区域的俯瞰图。视频和俯瞰图中都标有A、B两个地理实体，注意观察它们之间的相对方向和距离。<br></p>
+            <p style="color: #6e94ff; margin-top: 10px;"></p>
+        </div>
+<!--            <p>-->
+<!--                <strong>（7）下面，将会为你播放一个360°全景视频，视频下方是对应区域的俯瞰图。视频和俯瞰图中都标有A、B两个地理实体，注意观察它们之间的相对方向和距离。<br>-->
+<!--                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你有120秒的时间观看，准备好了后点击下方按钮👇-->
+<!--                </strong>-->
+<!--            </p>-->
+        </div>
+    </div>
+</div>
+<form class="layui-form" action="" lay-filter="example">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-xs11 layui-col-md11 image-container" id="image-container" style="text-align: center; margin-top: 10px;">
+            <div class="layui-col-md12 layui-col-xs12" style="display: flex;flex-direction: column;align-items: center;text-align: center;">
+                <img id='img1' src="../img/test.png" class="view-img" alt="Image 1">
+            </div>
+        </div>
+    </div>
+    </div>
+</form>
+<div class="layui-row">
+    <div class="layui-col-xs11 layui-col-md11" style="text-align: center; margin-top: 20px;">
+        <div class="site-demo-button" id="view_button" style="margin-top: 10px; margin-bottom: 0;">
+            <button style="height:50px; width:150px; background:url('../img/pre_page.png'); background-size:100% 100%; color: black" class="layui-btn site-demo-active" data-type="loading" onclick="pre_page()"><strong>上一题</strong></button>
+            <button style="height:50px; width:150px; background:url('../img/next_page.png'); background-size:100% 100%; color: black" class="layui-btn site-demo-active" data-type="loading" onclick="viewmap()"><strong>开始作答</strong></button>
+        </div>
+        <div class="site-demo-button" id="view_button2" style="margin-top: 10px; margin-bottom: 0;">
+            <button style="height:40px; width:100px; color:white; background:url('../img/button2.png'); background-size:100% 100%; " class="layui-btn site-demo-active" data-type="loading" onclick="tiao8()"><strong>跳过</strong></button>
+        </div>
+    </div>
+</div>
+<div class="layui-row">
+    <div class="layui-col-xs11 layui-col-md11 image-container" style="text-align: center;">
+        <div class="layui-btn-container" id="np"></div>
+    </div>
+</div>
+<div class="layui-row" id="retime"></div>
+
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script>
+    function tiao8() {
+        window.location.replace("8.html")
+    }
+    document.getElementById("image-container").innerHTML =
+        "<iframe id=\"vv\" style='height: 250px; width: 85%' " +
+        "src=\"//www.bilibili.com/blackboard/html5mobileplayer.html?" +
+        "aid=614300948&bvid=BV1hh4y1s7BR&cid=1148810681&page=1" +
+        "&high_quality=1&danmaku=0&autoplay=1&hideCoverInfo=0&hideDanmakuButton=0&fjw=0\"" +
+        " scrolling=\"no\" border=\"0\" frameborder=\"no\" framespacing=\"0\" allowfullscreen=\"true\"> </iframe>" +
+        "<div style=\"color:#fff\">小贴士：您可横屏观察</div>"+
+        "<img style='height: auto; width: 90%' src='../img/test3.png'>"
+    // 禁止回退
+    window.onload = function() {
+        if(window.history && window.history.pushState) {
+            window.onpopstate=function () {
+                window.history.pushState('forward', null, '');
+                window.history.forward(1);
+            };
+        }
+        window.history.pushState('forward', null, '');//在IE中必须得有这两行
+        window.history.forward(1);
+    }
+    if(window.history && window.history.pushState) {
+        window.onpopstate=function () {
+            window.history.pushState('forward', null, '');
+            window.history.forward(1);
+        };
+    }
+    window.history.pushState('forward', null, '');//在IE中必须得有这两行
+    window.history.forward(1);
+
+
+    function pre_page(){
+        localStorage.setItem("7", 1);
+        localStorage.setItem("qid", 6);
+        window.location.replace("basic_question.html");
+    }
+
+    function next_page1(rt){
+        localStorage.setItem("7_video_time", rt)
+        window.location.replace("7_processing2.html")
+    }
+
+    /* 修改字体大小适配 */
+    // 获取设备的屏幕宽度
+    var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    // 根据设计稿和适配规则计算基准字体大小
+    var baseFontSize = screenWidth / 750 * 16; // 假设设计稿宽度为750px，基准字体大小为16px
+    // 设置根元素的字体大小
+    document.documentElement.style.fontSize = baseFontSize + 'px';
+
+    function viewmap() {
+        window.location.replace("7_processing2.html")
+        // layui.use(['form', 'layedit', 'laydate'], function() {
+        //     let form = layui.form
+        //     let data = form.val('example');
+        //     let video_id = 100;
+        //     // let video_id = randomNumbers[data['img']-1];
+        //     console.log("video = " + video_id)
+        //     localStorage.setItem("7_video_id", video_id)
+        //
+        //     let $ = layui.jquery,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+        //     document.getElementById("image-container").innerHTML =
+        //         "<iframe id=\"vv\" style='height: 250px; width: 85%' " +
+        //         "src=\"//www.bilibili.com/blackboard/html5mobileplayer.html?" +
+        //         "aid=614300948&bvid=BV1hh4y1s7BR&cid=1148810681&page=1" +
+        //         "&high_quality=1&danmaku=0&autoplay=1&hideCoverInfo=0&hideDanmakuButton=0&noFullScreenButton=1&fjw=0\"" +
+        //         " scrolling=\"no\" border=\"0\" frameborder=\"no\" framespacing=\"0\" allowfullscreen=\"true\"> </iframe>" +
+        //         "<div style=\"color:#fff\">小贴士：您可以随时拖动进度条查看</div>"+
+        //         "<img style='height: 180px; width: auto' src='../img/test3.png'>"
+        //     document.getElementById('view_button').innerHTML =
+        //         "<button class=\"layui-btn-disabled site-demo-active\" style='display: none;' data-type=\"loading\">选择好了，开始观察</button>"
+        //     document.getElementById("tag1").innerHTML = "<img style='height: 50px; width: auto' src='../img/lou.gif'>"
+        //     document.getElementById("tag").innerHTML = "<div style=\"height:50px;display: flex;font-size: 20px; text-align: left; color: #fff;background:url('../img/question.png');background-size: 100% 100%;\">" +
+        //         "    <div style=\"height:50px;display: block;width: 45%; text-align: right;margin-top: 15px;\">\n" +
+        //         "        <span style='height:50px; font-size: 20px;' id='countdown_h'></span>" +
+        //         "    </div>\n" +
+        //         "    <div style=\"height:50px;display: block;width: 10%; text-align: center;margin-top: 15px;\">\n" +
+        //         "        <span style='height:50px; font-size: 20px;'>:</span>" +
+        //         "    </div>\n" +
+        //         "    <div style=\"height:50px;display: block;width: 45%; text-align: left;margin-top: 15px;\">\n" +
+        //         "        <span style='height:50px; font-size: 20px;' id='countdown'></span>" +
+        //         "    </div>\n" +
+        //         "</div>"
+        // });
+        //
+        //
+        // //模拟loading
+        // let $ = layui.jquery,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+        // var countDown = 120; // 设置倒计时时间，单位为秒
+        // var remainingTime = countDown; // 剩余时间，初始为倒计时时间
+        // var timer = setInterval(function () {
+        //     remainingTime--;
+        //     if (remainingTime <= 0) {
+        //         remainingTime = 0;
+        //         clearInterval(timer);
+        //         window.location.href="7_processing2.html"
+        //     }
+        //     let rt = countDown - 15;
+        //     if (remainingTime <= rt) {
+        //         let res = remainingTime + 32;
+        //         document.getElementById("np").innerHTML =
+        //             "<button type=\"button\" style=\"font-size:16px; font-weight:bold; height:50px; width:200px; background:url('../img/button2.png'); background-size:100% 100%; color: #b8c2dd\" class=\"layui-btn site-demo-active\" data-type=\"loading\" onclick=\"next_page1(" + res + ")\">观察好了，开始作答</button>\n"
+        //     }
+        //     remainingTime = remainingTime < 10 ? "0"+remainingTime : remainingTime;
+        //     let h = remainingTime / 60;
+        //     h = h < 10 ? "0" + h: h;
+        //     let h1 = h.toString().slice(0, 1)
+        //     let h2 = h.toString().slice(1, 2)
+        //     let r = remainingTime % 60;
+        //     r = r < 10 ? "0" + r: r;
+        //     let r1 = r.toString().slice(0, 1)
+        //     let r2 = r.toString().slice(1, 2)
+        //     // console.log(remainingTime + " " + h1 + " " + h2 + " " + r1 + " " + r2)
+        //     document.getElementById("countdown").innerHTML=
+        //         "<span class=\"digit\">" + r1 + "</span>\n" +
+        //         "<span class=\"digit\">" + r2 + "</span>\n"
+        //     document.getElementById("countdown_h").innerHTML=
+        //         "<span class=\"digit\">" + h1 + "</span>\n" +
+        //         "<span class=\"digit\">" + h2 + "</span>\n"
+        //     // element.progress('demo', Math.floor((countDown - remainingTime) / countDown * 100) + '%', description);
+        // }, 1000);
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     document.getElementById('view_button').innerHTML =
+        //         "<button style='display: none' class=\"layui-btn site-demo-active\" data-type=\"loading\">" +
+        //         "准备好了，开始观察</button>"
+        //     document.getElementById('page').innerHTML = "<div class=\"layui-col-xs11 layui-col-md11 image-container\" style=\"text-align: center; margin-top: 25px;\"></div>"
+        //
+        // })
+
+    }
+
+</script>
+</body>
+</html>

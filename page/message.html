@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试结果</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <style>
+        .layui-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .font2 > p {
+            font-size: 15px;
+            /*text-shadow: 1px 1px 1px black;*/
+            color: #800000;
+            text-align: left;
+        }
+        .underline-input {
+            border: none;
+            border-bottom: 1px solid black;
+            background-color: transparent;
+        }
+        .custom-select {
+            appearance: none;
+            padding: 8px;
+            border: 1px solid black;
+            border-radius: 4px;
+            /*background-color: white;*/
+            width: 200px;
+            background-color: #657181;
+            color: white;
+        }
+
+        .custom-select:focus {
+            outline: none;
+            background-color: #657181;
+            box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+        .timu_box{
+            margin-top:10px;
+            width:100%;
+            /*height:175px;*/
+            padding:2.3rem 2.8rem 2.5rem 2.5rem;  /* 上下右左 */
+            box-sizing:border-box;
+            background:url('../img/question.png');
+            background-size: 100% 100%;
+        }
+        .text1{
+            font-size:1.5rem;
+            line-height:1rem;
+            color:#d7e1ff;
+            font-family: "黑体";
+            font-weight: bold;
+            /*text-shadow: -2px 2px 0.2rem #000,2px -2px 0.2rem #000,2px 2px 0.2rem #000,-2px -2px 0.2rem #000;*/
+        }
+    </style>
+    <script src="../layui/layui.js" charset="utf-8"></script>
+</head>
+<body style="background:url('../img/background_new.png')">
+<div class="layui-row">
+    <div class="layui-col-xs11 layui-col-md11" style="text-align: center; margin-top: 10px;">
+        <div class="grid-demo grid-demo-bg2" id="tag1">
+            <img style="width: 150px;" src="../img/logo.png">
+        </div>
+    </div>
+</div>
+<div class="layui-row layui-col-space11">
+    <div class="layui-col-xs11 layui-col-md11" style="text-align: left; margin-top: 5px; " id="tag">
+        <div id = "title" style="text-align: center;line-height: 1.5; font-size: 15px" class="timu_box text1">
+            <p>
+                感谢您的参与！请您花费一分钟时间提供以下信息，以生成专属测试报告。（选填）
+            </p>
+        </div>
+        <div class="font2" style='margin-left: 30px;'>
+            <ul style="font-size: 16px; padding: 10px;color:#d7e1ff;">
+                <li style="margin-top: 10px;">
+                    <strong>昵称：</strong>
+                    <input type="text" id="name" style="border-bottom: 2px solid #d7e1ff; color: white" class="underline-input">
+                </li>
+                <li style="margin-top: 10px;">
+                    <strong>年龄：</strong>
+                    <select class="custom-select" id="age">
+                        <option value="0">请选择</option>
+                        <option value="<18">< 18</option>
+                        <option value="19-25">19 - 25</option>
+                        <option value="26-40">26 - 40</option>
+                        <option value="41-60">41 - 60</option>
+                        <option value=">60">> 60</option>
+                    </select>
+                </li>
+                <li style="margin-top: 10px;">
+                    <strong>职业：</strong>
+                    <select class="custom-select" id="career">
+                        <option value="0">请选择</option>
+                        <option value="学生-初中生及以下1">学生-初中生及以下</option>
+                        <option value="学生-高中生">学生-高中生</option>
+                        <option value="学生-本科生">学生-本科生</option>
+                        <option value="学生-研究生及以上">学生-研究生及以上</option>
+                        <option value="学生-其他">学生-其他</option>
+                        <option value="教师">教师</option>
+                        <option value="地理相关从业者">地理相关从业者</option>
+                        <option value="设计相关从业者">设计相关从业者</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </li>
+                <li style="margin-top: 10px;">
+                    <strong>身份：</strong>
+                    <div id="sexy" style="text-align: left">
+                        <label style="margin-left: 50px;">
+                            <input type="radio" name="sexy" value="boy">
+                            <img style="height: 60px" src="../img/boy.png" alt="Image 1">
+                        </label>
+                        <label style="margin-left: 40px;">
+                            <input type="radio" name="sexy" value="girl">
+                            <img style="height: 60px" src="../img/girl.png" alt="Image 2">
+                        </label>
+                    </div>
+                </li>
+            </ul>
+            <div class="site-demo-button" style="margin-top: 10px; text-align: center">
+                <button style="height:50px; width:250px; background:url('../img/button_last.png'); background-size:100% 100%; color: #123777; font-size: 16px;font-weight: bold" class="layui-btn site-demo-active" data-type="loading" onclick="next_page()"><strong>生成专属测试报告</strong></button>
+            </div>
+            <div class="site-demo-button" style="margin-top: 5px; text-align: center">
+                <span style='text-decoration: underline;color: #1d4892; font-size: 18px; font-weight: bold' onclick='tiaoguo()'>跳过</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+    <div style="background:url('../img/background_bottom2.png'); position: fixed;bottom:0; background-size: 100% 100%;width: 100%;font-size: 14px; text-align: center;">
+        <p style="padding: 20px;color: white; font-weight: bold">
+            感谢您为空间认知研究的科学性和完整性做出贡献，我们保证不采集您的个人隐私数据，收集到的数据不用于任何商业用途。
+        </p>
+    </div>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/html2canvas.js"></script>
+    <script type="text/javascript" src="../js/Canvas2Image.js"></script>
+    <script>
+        let ans = {
+            "yid": 1,
+            "s1": localStorage.getItem("q1_answer"),
+            "s2": localStorage.getItem("q2_answer"),
+            "s3": localStorage.getItem("q3_answer"),
+            "s4": localStorage.getItem("q4_answer"),
+            "s5": localStorage.getItem("q5_answer"),
+            "s6": localStorage.getItem("q6_answer"),
+            "s7_centerX": localStorage.getItem("7_center_x"),
+            "s7_centerY": localStorage.getItem("7_center_y"),
+            "s7_r": localStorage.getItem("7_r"),
+            "s7_aX": localStorage.getItem("7_a_x"),
+            "s7_aY": localStorage.getItem("7_a_y"),
+            "s7_bX": localStorage.getItem("7_b_x"),
+            "s7_bY": localStorage.getItem("7_b_y"),
+            "s8_vid": localStorage.getItem("video_id"),
+            "s8_vtime": localStorage.getItem("video_time"),
+            "s8_anstime": localStorage.getItem("ans_time"),
+            "s8_centerX": localStorage.getItem("center_x"),
+            "s8_centerY": localStorage.getItem("center_y"),
+            "s8_r": localStorage.getItem("r"),
+            "s8_aX": localStorage.getItem("a_x"),
+            "s8_aY": localStorage.getItem("a_y"),
+            "s8_bX": localStorage.getItem("b_x"),
+            "s8_bY": localStorage.getItem("b_y"),
+            "s8_cX": localStorage.getItem("c_x"),
+            "s8_cY": localStorage.getItem("c_y"),
+            "tiaoguo": localStorage.getItem("tiaoguo"),
+            "name":"",
+            "sexy":"",
+            "age":"",
+            "career":"",
+            "ip":""
+        }
+        console.log(JSON.stringify(ans));
+        // alert(ans)
+
+
+        function tiaoguo() {
+            ans["ip"] = localStorage.getItem("ip");
+            ans["name"] = "匿名用户"
+            localStorage.setItem("name", ans["name"])
+            $.ajax({
+                type:'post',
+                url:'http://121.36.78.210:9999/insertTest',
+                data: ans,
+                // dataType : "json",
+                async: true,
+                success : function(result) {
+                    if(result){
+                        console.log("result = " + result)
+                        localStorage.setItem("dir", result['dir']);
+                        localStorage.setItem("dis", result['dis']);
+                        localStorage.setItem("imagination", result['imagination']);
+                        localStorage.setItem("memory", result['memory']);
+                        localStorage.setItem("reason", result['reason']);
+                        localStorage.setItem("score", result['score']);
+                    }else{
+                        console.log(result);
+                    }
+                },error : function() {
+                    // alert("no")
+                    console.log('访问失败');
+                }
+            });
+            // $.ajax({
+            //     type:'POST',
+            //     url:'/insertUser',
+            //     data: mess,
+            //     // dataType : "json",
+            //     async: true,
+            //     success : function(result) {
+            //         if(result){
+            //             console.log("result = " + JSON.stringify(result))
+            //         }else{
+            //             console.log(result);
+            //         }
+            //     },error : function() {
+            //         // alert("no")
+            //         console.log('访问失败');
+            //     }
+            // });
+            // window.location.replace("ans2.html")
+        }
+        function next_page() {
+            // 昵称
+            let inputElement = document.getElementById('name');
+            let len = inputElement.value.length;
+            if(len > 12) {
+                layer.msg("昵称长度超限，中文不超过6个字", {icon: 0,time:2000})
+                return;
+            }
+            else if(len === 0) {
+                ans["name"] = "匿名用户"
+                localStorage.setItem("name", ans["name"])
+            }
+            else {
+                ans["name"] = inputElement.value
+                localStorage.setItem("name", ans["name"])
+            }
+            // 年龄和职业
+            let selectAge = document.getElementById('age');
+            selectAge = selectAge.value;
+            ans["age"] = selectAge
+            localStorage.setItem("age", ans["age"])
+            let selectCareer = document.getElementById('career');
+            selectCareer = selectCareer.value;
+            ans["career"] = selectCareer
+            localStorage.setItem("career", ans["career"])
+            // 性别
+            let radioButtons = document.getElementsByName('sexy');
+            let flag = 0;
+            for (let i = 0; i < radioButtons.length; i++) {
+                if (radioButtons[i].checked) {
+                    ans["sexy"] = radioButtons[i].value
+                    localStorage.setItem("sexy", ans["sexy"])
+                    flag = 1;
+                }
+            }
+            if(flag === 0) {
+                ans["sexy"] = ""
+                localStorage.setItem("sexy", ans["sexy"])
+            }
+            ans["ip"] = localStorage.getItem("ip");
+            // $.ajax({
+            //     type:'POST',
+            //     url:'/insertUser',
+            //     data: mess,
+            //     // dataType : "json",
+            //     async: true,
+            //     success : function(result) {
+            //         if(result){
+            //             console.log("result = " + JSON.stringify(result))
+            //         }else{
+            //             console.log(result);
+            //         }
+            //     },error : function() {
+            //         // alert("no")
+            //         console.log('访问失败');
+            //     }
+            // });
+            $.ajax({
+                type:'post',
+                url:'/insertTest',
+                data: ans,
+                // dataType : "json",
+                async: true,
+                success : function(result) {
+                    if(result){
+                        console.log("result = " + result)
+                        localStorage.setItem("dir", result['dir']);
+                        localStorage.setItem("dis", result['dis']);
+                        localStorage.setItem("imagination", result['imagination']);
+                        localStorage.setItem("memory", result['memory']);
+                        localStorage.setItem("reason", result['reason']);
+                        localStorage.setItem("score", result['score']);
+                    }else{
+                        console.log(result);
+                    }
+                },error : function() {
+                    // alert("no")
+                    console.log('访问失败');
+                }
+            });
+
+            console.log("mess = " + JSON.stringify(ans))
+            window.location.replace("ans2.html")
+        }
+
+
+
+
+
+
+        /* 修改字体大小适配 */
+        // 获取设备的屏幕宽度
+        var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        // 根据设计稿和适配规则计算基准字体大小
+        var baseFontSize = screenWidth / 750 * 16; // 假设设计稿宽度为750px，基准字体大小为16px
+        // 设置根元素的字体大小
+        document.documentElement.style.fontSize = baseFontSize + 'px';
+        // 禁止回退
+        window.onload = function() {
+            if(window.history && window.history.pushState) {
+                window.onpopstate=function () {
+                    window.history.pushState('forward', null, '');
+                    window.history.forward(1);
+                };
+            }
+            window.history.pushState('forward', null, '');//在IE中必须得有这两行
+            window.history.forward(1);
+        }
+        if(window.history && window.history.pushState) {
+            window.onpopstate=function () {
+                window.history.pushState('forward', null, '');
+                window.history.forward(1);
+            };
+        }
+        window.history.pushState('forward', null, '');//在IE中必须得有这两行
+        window.history.forward(1);
+
+
+    </script>
+</body>
+</html>

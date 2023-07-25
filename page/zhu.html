@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>柱形图</title>
+    <style type="text/css">
+        ul,li{list-style: none;margin:0;padding:0;float:left;}
+        html{height:100%}
+        body{height:100%;margin:0px;padding:0px;font-family:"微软雅黑";}
+        #container{
+            position:relative;
+            height:100%;
+            width:100%;
+        }
+    </style>
+</head>
+
+<body>
+<div id="container"></div>
+
+<script type="text/javascript" src="../js/echarts.min.js"></script>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script>
+    var zheChart;
+    zheChart = echarts.init(document.getElementById('container'));
+
+    option = {
+        xAxis: {
+            type: 'category',
+            data: ['定向能力', '距离感知', '空间推理', '空间记忆', '空间想象']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                itemStyle: {
+                    normal: {
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            // formatter: '{c}%',//显示百分号
+                            textStyle: { //数值样式
+                                color: 'black',//字体颜色
+                                fontSize: 18//字体大小
+                            }
+                        }
+                    }
+                },
+                data: [
+                    {
+                        value: 90,
+                        itemStyle: {
+                            color: '#CD853F'
+                        }
+                    },
+                    {
+                        value: 99,
+                        itemStyle: {
+                            color: '#a90000'
+                        }
+                    },
+                    {
+                        value: 82,
+                        itemStyle: {
+                            color: '#CD853F'
+                        }
+                    },
+                    {
+                        value: 85,
+                        itemStyle: {
+                            color: '#CD853F'
+                        }
+                    },
+                    {
+                        value: 72,
+                        itemStyle: {
+                            color: '#CD853F'
+                        }
+                    },
+                ],
+                type: 'bar'
+            }
+        ]
+    };
+
+    zheChart.setOption(option);
+
+
+
+    // 获取渲染后的画布
+    var renderedCanvas = zheChart.getRenderedCanvas({
+        backgroundColor: 'transparent' // 设置背景色为透明
+    });
+
+    // 将画布转换为图像
+    var chartDataURL = renderedCanvas.toDataURL('image/png');
+
+    // 创建图片元素
+    var imageElement = new Image();
+    imageElement.src = chartDataURL;
+
+    // 添加图像到页面
+    document.body.appendChild(imageElement);
+</script>
+</body>
+</html>
